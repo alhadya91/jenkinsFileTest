@@ -2,7 +2,7 @@ pipeline {
     agent any
 
 	parameters {
-        string(defaultValue: /var/jenkins_home/jobs/, description: '', name: 'directoriesToSave')
+        string(defaultValue: '/var/jenkins_home/jobs/', description: '', name: 'directoriesToSave')
     }
     stages {
         stage('Build') {
