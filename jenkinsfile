@@ -1,13 +1,20 @@
 pipeline {
     agent any
 
+	parameters {
+        string(defaultValue: /var/jenkins_home/jobs/, description: '', name: 'directoriesToSave')
+    }
     stages {
         stage('Build') {
             steps {
-                sh 'echo "Hello World"'
+                sh 'git checkout master'
                 sh '''
-                    echo "Multiline shell step"
-                    ls
+					pwd
+					tar -czf jenkinsBackup.tar.gz ${params.directoriesToSave}
+                '''
+				sh '''
+					git add --a
+					git commit -am "adding new jenkins backup"
                 '''
             }
         }
@@ -18,7 +25,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                echo 'Deploying....'
+                sh 'git push origin master'
             }
         }
     }
